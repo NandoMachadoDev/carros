@@ -2,6 +2,7 @@ package com.example.carros.api;
 
 import com.example.carros.domain.Carro;
 import com.example.carros.domain.CarroService;
+import com.example.carros.domain.dto.CarroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class CarrosController {
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
-        Optional<Carro> carro = service.getCarroById(id);
+        Optional<CarroDTO> carro = service.getCarroById(id);
 
         if (carro.isPresent()) {
             return ResponseEntity.ok(carro.get());
@@ -33,8 +34,8 @@ public class CarrosController {
     }
 
     @GetMapping("/tipo/{tipo}")
-    public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo) {
-        List<Carro> carros = service.getCarroByTipo(tipo);
+    public ResponseEntity get(@PathVariable("tipo") String tipo) {
+        List<CarroDTO> carros = service.getCarroByTipo(tipo);
 
         return carros.isEmpty() ?
                 ResponseEntity.noContent().build() :
