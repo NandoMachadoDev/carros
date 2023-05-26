@@ -6,6 +6,7 @@ import com.example.carros.domain.dto.CarroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -56,6 +57,7 @@ public class CarrosController {
     }
 
     @PutMapping("/{id}")
+    @Secured({ "ROLE_ADMIN" })
     public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 
         carro.setId(id);
@@ -68,6 +70,7 @@ public class CarrosController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured({ "ROLE_ADMIN" })
     public ResponseEntity delete(@PathVariable("id") Long id) {
         service.delete(id);
 

@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.io.Serializable;
+import java.nio.file.AccessDeniedException;
 
 @RestControllerAdvice
 public class ExceptionConfig extends ResponseEntityExceptionHandler {
@@ -31,10 +32,24 @@ public class ExceptionConfig extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers) {
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         return new ResponseEntity<>(new ExceptionError("Operação não permitida"), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
+    @ExceptionHandler({
+            AccessDeniedException.class
+    })
+    public ResponseEntity accessDenied() {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new Error("Acesso negado"));
+    }
+}
+
+class Error {
+    public String error;
+
+    public Error(String error) {
+        this.error = error;
+    }
 }
 
 class ExceptionError implements Serializable {
