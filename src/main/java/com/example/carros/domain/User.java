@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-@Entity(name = "User")
+@Entity(name = "user")
 public class User {
 
     @Id
@@ -18,9 +18,9 @@ public class User {
     private Long id;
 
     private String nome;
-    private String email;
     private String login;
     private String senha;
+    private String email;
 
     public static void main(String[] args) {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -28,4 +28,3 @@ public class User {
         System.out.print(pwd);
     }
 }
-
